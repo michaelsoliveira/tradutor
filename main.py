@@ -34,7 +34,7 @@ idiomas = {
     'Grego': 'el', 'Gujarati': 'gu', 'Hebraico': 'he', 'Hindi': 'hi', 'Húngaro': 'hu',
     'Indonésio': 'id', 'Italiano': 'it', 'Japonês': 'ja', 'Javanês': 'jw', 'Coreano': 'ko',
     'Letão': 'lv', 'Lituano': 'lt', 'Malaio': 'ms', 'Marata': 'mr', 'Norueguês': 'no',
-    'Polonês': 'pl', 'Português (Brasil)': 'pt-br', 'Português Portugal': 'pt',
+    'Polonês': 'pl', 'Português Brasil': 'pt', 'Português': 'pt',
     'Romeno': 'ro', 'Russo': 'ru', 'Sérvio': 'sr', 'Eslovaco': 'sk', 'Esloveno': 'sl',
     'Espanhol': 'es', 'Suaíli': 'sw', 'Sueco': 'sv', 'Tâmil': 'ta', 'Telugu': 'te',
     'Tailandês': 'th', 'Turco': 'tr', 'Ucraniano': 'uk', 'Vietnamita': 'vi', 'Galês': 'cy'
@@ -98,10 +98,8 @@ def selecionar_idioma_por_voz():
         if comando:
             for nome, codigo in idiomas.items():
                 if nome.lower() in comando:
-                    falar(f"Entendi que você quer traduzir para {nome}. Isso está correto?")
-                    confirmacao = reconhecer_comando()
-                    if confirmacao and ('sim' in confirmacao or 'correto' in confirmacao):
-                        return codigo
+                    falar(f"Entendi que você quer traduzir para {nome}")
+                    return codigo
         falar("Desculpe, não consegui identificar o idioma. Vamos tentar novamente?")
 
 # Função para traduzir texto usando um modelo pré-treinado
