@@ -1,0 +1,16 @@
+#Instalação
+
+Realizar a instalação dos seguinte pacotes
+
+- pytesseract
+- PIL
+- transformers
+- pyttsx3
+- nltk
+- math
+- torch
+
+
+`Após a conclusão da instalação executar o seguinte comando`
+
+##python -m nltk.downloader punkt_tab
