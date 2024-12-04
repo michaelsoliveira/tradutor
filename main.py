@@ -34,7 +34,7 @@ idiomas = {
     'Grego': 'el', 'Gujarati': 'gu', 'Hebraico': 'he', 'Hindi': 'hi', 'Húngaro': 'hu',
     'Indonésio': 'id', 'Italiano': 'it', 'Japonês': 'ja', 'Javanês': 'jw', 'Coreano': 'ko',
     'Letão': 'lv', 'Lituano': 'lt', 'Malaio': 'ms', 'Marata': 'mr', 'Norueguês': 'no',
-    'Polonês': 'pl', 'Português (Brasil)': 'pt-br', 'Português Portugal': 'pt-pt',
+    'Polonês': 'pl', 'Português (Brasil)': 'pt-br', 'Português Portugal': 'pt',
     'Romeno': 'ro', 'Russo': 'ru', 'Sérvio': 'sr', 'Eslovaco': 'sk', 'Esloveno': 'sl',
     'Espanhol': 'es', 'Suaíli': 'sw', 'Sueco': 'sv', 'Tâmil': 'ta', 'Telugu': 'te',
     'Tailandês': 'th', 'Turco': 'tr', 'Ucraniano': 'uk', 'Vietnamita': 'vi', 'Galês': 'cy'
@@ -180,7 +180,7 @@ def main():
 
                 if extracted_text:
                     print("\nTraduzindo o texto...")
-                    translated_text = translate_text(extracted_text, source_lang="en", target_lang="pt")
+                    translated_text = translate_text(extracted_text, source_lang="en", target_lang=idioma_selecionado)
                     print(f"Texto traduzido: {translated_text}")
 
                     print("\nLendo o texto traduzido em voz...")
