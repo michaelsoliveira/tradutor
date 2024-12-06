@@ -113,8 +113,8 @@ def translate_text(text, source_lang="en", target_lang="pt"):
         # translated_tokens = model.generate(**inputs, num_beams=4, max_length=500, early_stopping=True)
         # translated_text = tokenizer.decode(translated_tokens[0], skip_special_tokens=True)
         
-        tokenizer = MarianTokenizer.from_pretrained(model_name)
-        model = MarianMTModel.from_pretrained(model_name)
+        # tokenizer = MarianTokenizer.from_pretrained(model_name)
+        # model = MarianMTModel.from_pretrained(model_name)
         model.to(device)
         lt = LineTokenizer()
         batch_size = 8
@@ -174,6 +174,7 @@ def main():
                 # Processamento
                 print("Processando a imagem para extrair texto...")
                 extracted_text = extract_text_from_image(selected_frame)
+
                 print(f"Texto extraído: {extracted_text}")
 
                 if extracted_text:
