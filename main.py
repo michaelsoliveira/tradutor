@@ -9,6 +9,7 @@ import math
 import torch
 import cv2
 from concurrent.futures import ThreadPoolExecutor
+import numpy as np
 
 # Configuração do Tesseract OCR
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'  # Ajuste o caminho no Windows ou deixe padrão no Linux/Mac
@@ -69,9 +70,8 @@ def select_frame_por_voz(cap, result):
             comando = result['comando']
             result['comando'] = None
             if "capturar" in comando or "enter" in comando:
-                falar("Certo, vou capturar esta imagem. Tudo bem para você?")
-                if reconhecer_comando() in ['sim', 'pode', 'ok', 'tudo bem']:
-                    return frame
+                falar("Certo, vou capturar esta imagem.")
+                return frame
             elif "sair" in comando or "finalizar" in comando:
                 falar("Você quer que eu encerre o programa?")
                 if reconhecer_comando() in ['sim', 'pode', 'ok', 'encerre']:
@@ -81,12 +81,15 @@ def select_frame_por_voz(cap, result):
             break
     return None
 
-        
+def preprocess_image(image):
+    return cv2.resize(image, (128, 128)) / 255.0
+     
 # Função para realizar OCR na imagem
 def extract_text_from_image(image_path):
     try:
-        image = Image.open(image_path)
-        text = pytesseract.image_to_string(image)  # OCR para texto em inglês
+        # image = Image.open(image_path)
+        gray = cv2.cvtColor(image_path, cv2.COLOR_BGR2GRAY)
+        text = pytesseract.image_to_string(gray)  # OCR para texto em inglês
         return text.strip()
     except Exception as e:
         return f"Erro ao processar a imagem: {e}"
@@ -109,12 +112,6 @@ def translate_text(text, source_lang="en", target_lang="pt"):
         tokenizer = MarianTokenizer.from_pretrained(model_name)
         model = MarianMTModel.from_pretrained(model_name)
 
-        # inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True)
-        # translated_tokens = model.generate(**inputs, num_beams=4, max_length=500, early_stopping=True)
-        # translated_text = tokenizer.decode(translated_tokens[0], skip_special_tokens=True)
-        
-        # tokenizer = MarianTokenizer.from_pretrained(model_name)
-        # model = MarianMTModel.from_pretrained(model_name)
         model.to(device)
         lt = LineTokenizer()
         batch_size = 8
@@ -174,7 +171,7 @@ def main():
                 # Processamento
                 print("Processando a imagem para extrair texto...")
                 extracted_text = extract_text_from_image(selected_frame)
-
+                result['comando'] = None
                 print(f"Texto extraído: {extracted_text}")
 
                 if extracted_text:
@@ -184,6 +181,7 @@ def main():
 
                     print("\nLendo o texto traduzido em voz...")
                     falar(translated_text)
+                    result['fim'] = True
                 # processar_imagem(selected_frame, model, idioma_selecionado)
 
     falar("Estou encerrando o programa. Foi um prazer ajudar você hoje. Obrigado por usar o SICOMUV!")
